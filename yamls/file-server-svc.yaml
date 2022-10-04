@@ -9,5 +9,5 @@ spec:
       targetPort: 8080
       nodePort: 30800
   selector:
-      stacker: backend
+      app: file-server
   type: NodePort

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: file-server-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: file-server
@@ -12,20 +12,30 @@ spec:
       name: file-server-replicaset
       labels:
         app: file-server
-      spec:
-        containers:
-          - name: file-server-pod
-            image: hhlee7175/file-server:v1.0
-            imagePullPolicy: IfNotPresent
-            volumeMounts:
-              - name: file-storage
-                mountPath: /app/files
-              - name: tz-seoul
-                mountPath: /etc/localtime
-        volumes:
-          - name: file-storage
-            persistentVolumeClaim:
-              cliamName: file-server-pvc
-          - name: tz-seoul
-            hostPath:
-              path: /usr/share/zoneinfo/Asia/Seoul
+    spec:
+      containers:
+        - name: file-server-pod
+          image: hhlee7175/file-server:v1.7
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: model-storage
+              mountPath: /app/files/model
+            - name: dataset-storage
+              mountPath: /app/files/dataset
+            - name: file-server-config
+              mountPath: /app/config
+            - name: tz-seoul
+              mountPath: /etc/localtime
+      volumes:
+        - name: model-storage
+          persistentVolumeClaim:
+            claimName: file-server-model-pvc
+        - name: dataset-storage
+          persistentVolumeClaim:
+            claimName: file-server-dataset-pvc
+        - name: file-server-config
+          configMap:
+              name: file-server-config 
+        - name: tz-seoul
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Seoul

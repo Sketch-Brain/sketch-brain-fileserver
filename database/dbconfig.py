@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(BASE_DIR, "../.env"))
+load_dotenv(os.path.join(BASE_DIR, "../config/.env"))
 
 app = {
     'name': 'mysql+pymysql',

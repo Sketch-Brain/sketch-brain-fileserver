@@ -5,8 +5,8 @@ metadata:
   labels:
     app: file-server-config
 data:
-  .env |
-     DB_HOST=mysql-svc
-     DB_PORT=3306
-     DB_ID=root
-     DB_PW=agilesoda0801
+  .env: |
+    DB_HOST=mysql-svc
+    DB_PORT=3306
+    DB_ID=root
+    DB_PW=agilesoda0801

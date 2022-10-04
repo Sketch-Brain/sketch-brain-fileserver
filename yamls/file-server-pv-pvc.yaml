@@ -1,23 +1,53 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: file-server-pv
+  name: file-server-dataset-pv
   labels:
-    app: file-server
+    app: file-server-dataset
 spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/k8s-pv/dataset"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: file-server-dataset-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: file-server-model-pv
+  labels:
+    app: file-server-model
+spec:
+  storageClassName: manual
   capacity:
     storage: 20Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/k8s-pv/file-server"
+    path: "/k8s-pv/model"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: file-server-pvc
+  name: file-server-model-pvc
+spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
-  resource:
+  resources:
     requests:
       storage: 20Gi
