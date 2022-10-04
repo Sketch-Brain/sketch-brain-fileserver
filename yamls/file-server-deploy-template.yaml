@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-server-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: file-server
+  template:
+    metadata:
+      name: file-server-replicaset
+      labels:
+        app: file-server
+      spec:
+        containers:
+          - name: file-server-pod
+            image: #VERSION_STRING#
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+              - name: file-storage
+                mountPath: /app/files
+              - name: tz-seoul
+                mountPath: /etc/localtime
+        volumes:
+          - name: file-storage
+            persistentVolumeClaim:
+              cliamName: file-server-pvc
+          - name: tz-seoul
+            hostPath:
+              path: /usr/share/zoneinfo/Asia/Seoul

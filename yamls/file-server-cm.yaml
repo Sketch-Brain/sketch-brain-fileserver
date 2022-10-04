@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: file-server-config
+  labels:
+    app: file-server-config
+data:
+  .env |
+     DB_HOST=mysql-svc
+     DB_PORT=3306
+     DB_ID=root
+     DB_PW=agilesoda0801
