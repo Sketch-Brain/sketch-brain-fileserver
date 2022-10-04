@@ -18,17 +18,17 @@ router = APIRouter(
 logger = logging.getLogger("fileserver-logger")
 engine = dbconfig.Engine()
 
-@router.get("/list")
-def getFileList(user: Union[str,None] = None):
+@router.get("/{file_type}/list")
+def getFileList( file_type: str, user: Union[str,None] = None):
 
     logger.info("file_mgr : get file list")
     session = engine.sessionMaker()
 
     try:
         if user:
-            fileList = session.query(FileList).filter(FileList.user == user).all()
+            fileList = session.query(FileList).filter(FileList.user == user,FileList.file_type==file_type).all()
         else:
-            fileList = session.query(FileList).all()
+            fileList = session.query(FileList).filter(FileList.file_type==file_type).all()
         fileNameList = []
         for file in fileList:
             fileNameList.append(file.file_name)
@@ -38,17 +38,18 @@ def getFileList(user: Union[str,None] = None):
         logger.debug(e)
         return {'success': False, 'msg': 'DB Error'}
 
-@router.put("/")
-async def uploadFile(file: UploadFile = File(...), user: str = Form(...)):
+@router.put("/{file_type}/")
+async def uploadFile(file_type:str, file: UploadFile = File(...), user: str = Form(...)):
 
     logger.info(f"file_mgr : {file.filename} uploaded by {user}")
-    UPLOAD_DIRECTORY = "./files/"
+    UPLOAD_DIRECTORY = f"./files/{file_type}"
     session = engine.sessionMaker()
     contents = await file.read()
     with open(os.path.join(UPLOAD_DIRECTORY, file.filename), "wb") as fp:
         fp.write(contents)
     fileList = FileList(
         id=None,
+        file_type=file_type,
         file_name=file.filename,
         user=user,
         created_at=None
@@ -66,14 +67,17 @@ async def uploadFile(file: UploadFile = File(...), user: str = Form(...)):
     return {'success': True}
 
 
-@router.get("/{file}")
-def downloadFile(file: str):
-
+@router.get("/{file_type}/{file}")
+def downloadFile(file_type:str, file: str):
     logger.info(f"file_mgr: {file} download")
-    return FileResponse(
-        path="./files/" + file,
-        media_type='application/octet-stream',
-        filename=file
-    )
+    try:
+        result = FileResponse(
+            path=f"./files/{file_type}/" + file,
+            media_type='application/octet-stream',
+            filename=file
+        )
+        return result
+    except:
+        return {"success":False}
 
 
