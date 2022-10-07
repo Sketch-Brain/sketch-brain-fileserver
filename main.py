@@ -3,10 +3,14 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 import time
 import logging
+from dotenv import load_dotenv
 
 from log_conf import log_config
 from logging.config import dictConfig
 from router import file_mgr
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, "./config/.env"))
 dictConfig(log_config)
 logger = logging.getLogger("fileserver-logger")
 
@@ -15,7 +19,7 @@ origins = [
     "http://localhost",
     "http://localhost:3000",
     "http://localhost:8080",
-    "http://218.144.108.84:30800"
+    os.environ["SERVER_HOST"]
 ]
 
 app.add_middleware(
