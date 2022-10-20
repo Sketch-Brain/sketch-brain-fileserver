@@ -12,7 +12,7 @@ app = {
     'user': os.environ["DB_ID"],
     'password': os.environ["DB_PW"],
     'host': os.environ["DB_HOST"],
-    'dbconn': 'fileserver',
+    'dbconn': 'file_server',
     'port': os.environ["DB_PORT"],
 }
 
