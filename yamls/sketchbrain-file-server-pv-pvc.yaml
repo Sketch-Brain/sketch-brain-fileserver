@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: file-server-dataset-pv
+  name: sketch-brain-file-server-dataset-pv
   labels:
-    app: file-server-dataset
+    app: sketch-brain-file-server-dataset
 spec:
   storageClassName: manual
   capacity:
@@ -16,7 +16,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: file-server-dataset-pvc
+  name: sketch-brain-file-server-dataset-pvc
 spec:
   storageClassName: manual
   accessModes:
@@ -28,9 +28,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: file-server-model-pv
+  name: sketch-brain-file-server-model-pv
   labels:
-    app: file-server-model
+    app: sketch-brain-file-server-model
 spec:
   storageClassName: manual
   capacity:
@@ -43,7 +43,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: file-server-model-pvc
+  name: sketch-brain-file-server-model-pvc
 spec:
   storageClassName: manual
   accessModes:
