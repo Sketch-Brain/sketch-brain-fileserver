@@ -10,3 +10,4 @@ data:
     DB_PORT=3306
     DB_ID=root
     DB_PW=agilesoda0801
+    SERVER_HOST=http://203.252.166.213:30800
