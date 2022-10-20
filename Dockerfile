@@ -1,4 +1,4 @@
-FROM hhlee7175/file-server-base:v1.0
+FROM hhlee7175/sketchbrain-file-server-base:v1.0
 
 RUN mkdir /app
 WORKDIR /app

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: file-server-deployment
+  name: sketch-brain-file-server-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: file-server
+      app: sketch-brain-file-server
   template:
     metadata:
-      name: file-server-replicaset
+      name: sketch-brain-file-server-replicaset
       labels:
-        app: file-server
+        app: sketch-brain-file-server
     spec:
       containers:
-        - name: file-server-pod
+        - name: sketch-brain-file-server-pod
           image: #VERSION_STRING#
           imagePullPolicy: IfNotPresent
           volumeMounts:
@@ -22,20 +22,20 @@ spec:
               mountPath: /app/files/model
             - name: dataset-storage
               mountPath: /app/files/dataset
-            - name: file-server-config
+            - name: sketch-brain-file-server-config
               mountPath: /app/config
             - name: tz-seoul
               mountPath: /etc/localtime
       volumes:
         - name: model-storage
           persistentVolumeClaim:
-            claimName: file-server-model-pvc
+            claimName: sketch-brain-file-server-model-pvc
         - name: dataset-storage
           persistentVolumeClaim:
-            claimName: file-server-dataset-pvc
-        - name: file-server-config
+            claimName: sketch-brain-file-server-dataset-pvc
+        - name: sketch-brain-file-server-config
           configMap:
-              name: file-server-config 
+            name: sketch-brain-file-server-config
         - name: tz-seoul
           hostPath:
             path: /usr/share/zoneinfo/Asia/Seoul
