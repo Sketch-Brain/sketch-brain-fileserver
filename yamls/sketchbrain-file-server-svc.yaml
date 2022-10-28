@@ -7,7 +7,6 @@ spec:
     - name: sketch-brain-file-server-svc
       port: 8080
       targetPort: 8080
-      nodePort: 30800
   selector:
     app: sketch-brain-file-server
-  type: NodePort
+  type: ClusterIP
