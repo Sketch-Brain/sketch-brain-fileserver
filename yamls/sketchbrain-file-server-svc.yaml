@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sketch-brain-file-server-svc
+spec:
+  ports:
+    - name: sketch-brain-file-server-svc
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: sketch-brain-file-server
+  type: ClusterIP

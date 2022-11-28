@@ -38,7 +38,7 @@ def getFileList( file_type: str, user: Union[str,None] = None):
         logger.debug(e)
         return {'success': False, 'msg': 'DB Error'}
 
-@router.put("/{file_type}/")
+@router.put("/{file_type}")
 async def uploadFile(file_type:str, file: UploadFile = File(...), user: str = Form(...)):
 
     logger.info(f"file_mgr : {file.filename} uploaded by {user}")

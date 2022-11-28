@@ -1,6 +1,6 @@
 from sqlalchemy import Column, TEXT, INT, VARCHAR, TIMESTAMP
 from sqlalchemy.orm import declarative_base
-
+import datetime
 Base = declarative_base()
 
 class FileList(Base):
@@ -9,7 +9,7 @@ class FileList(Base):
     file_type = Column(VARCHAR(20))
     file_name = Column(VARCHAR(256))
     user = Column(VARCHAR(20))
-    created_at = Column(TIMESTAMP)
+    created_at = Column(TIMESTAMP,default=datetime.datetime.now)
 
     def __init__(
             self,
